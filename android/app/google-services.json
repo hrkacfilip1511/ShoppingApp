@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "872509155352",
+    "project_id": "eshopapplication-66af5",
+    "storage_bucket": "eshopapplication-66af5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872509155352:android:781bd20d8b32b60b123b6d",
+        "android_client_info": {
+          "package_name": "com.ivanfilip.eshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "872509155352-ir1j6c40oq1vrakmm5bdisv9c3419s95.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI59Ct8yxuQ5munjsYmb68WhiJR4mIyKk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "872509155352-ir1j6c40oq1vrakmm5bdisv9c3419s95.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
