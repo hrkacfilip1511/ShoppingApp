@@ -66,13 +66,13 @@ class _RegisterState extends State<Register>
                   ),
                   CustomTextField(
                     controller: _passwordTextEditingController,
-                    data: Icons.person,
+                    data: Icons.vpn_key,
                     hintText: "Lozinka",
                     isObsecure: true,
                   ),
                   CustomTextField(
                     controller: _cPasswordTextEditingController,
-                    data: Icons.add,
+                    data: Icons.vpn_key,
                     hintText: "Potvrda lozinke",
                     isObsecure: true,
                   ),
@@ -84,7 +84,7 @@ class _RegisterState extends State<Register>
               onPressed: () {
                 uploadAndSaveImage();
               },
-              color: Colors.pink,
+              color: Colors.blue,
               child: Text("Registriraj se",
               style: TextStyle(
                 color: Colors.white,
@@ -92,11 +92,7 @@ class _RegisterState extends State<Register>
               ),
             ),
             SizedBox(height: 30.0),
-            Container(
-              height: 8.0,
-              width: _screenWidth * 0.8,
-              color: Colors.white,
-            ),
+
             SizedBox(
               height: 15.0,
             )

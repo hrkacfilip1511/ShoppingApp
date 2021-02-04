@@ -62,7 +62,7 @@ class _LoginState extends State<Login>
                   ),
                   CustomTextField(
                     controller: _passwordTextEditingController,
-                    data: Icons.person,
+                    data: Icons.vpn_key,
                     hintText: "Lozinka",
                     isObsecure: true,
                   ),
@@ -81,16 +81,16 @@ class _LoginState extends State<Login>
                     }
                   );
                 },
-              color: Colors.pink,
+              color: Colors.blueAccent,
               child: Text("Prijava",
                 style: TextStyle(
                   color: Colors.white,
                 ),
               ),
             ),
-            SizedBox(height: 50.0),
+            SizedBox(height: 40.0),
             Container(
-              height: 8.0,
+              height: 3.0,
               width: _screenWidth * 0.8,
               color: Colors.white,
             ),
