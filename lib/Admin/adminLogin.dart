@@ -24,7 +24,7 @@ class AdminSignInPage extends StatelessWidget {
         title: Text("Grocery App",
           style: TextStyle(
             color: Colors.white,
-            fontFamily: "Signatra",
+            fontFamily: "Vidaloka-Regular",
             fontSize: 35.0,
           ),
         ),
@@ -135,7 +135,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                 Icons.error,
                 color: Colors.white,
               ),
-              label: Text("Nisam admin",
+              label: Text("Idi na korisnika",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

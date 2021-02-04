@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
 String getOrderId="";
 class OrderDetails extends StatelessWidget {
@@ -85,6 +86,7 @@ OrderDetails({Key key, this.orderID}) : super(key: key);
                       height: 2.0,
                       color: Colors.black,
                     ),
+
                     FutureBuilder<QuerySnapshot>(
                       future: EcommerceApp.firestore.collection("items")
                           .where("shortInfo", whereIn: dataMap[EcommerceApp.productID])
@@ -178,6 +180,8 @@ class StatusBanner extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 15.0,),
+
         ],
       ),
     );
@@ -210,6 +214,36 @@ class ShippingDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Builder(
+          builder: (BuildContext context) {
+             return Padding(
+              padding: EdgeInsets.all(4.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: new LinearGradient(
+                      colors: [Colors.red, Colors.orange]
+                  ),
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: FlatButton.icon(
+                  icon: Icon(
+                    Icons.share,
+                    color: Colors.white,
+                  ),
+                  label: Text("Dijeli",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  onPressed:  () {
+                    Share.share(getOrderId);
+                  },
+                ),
+              ),
+            );
+          }
+        ),
         SizedBox(height: 20.0,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 90.0, vertical: 5.0),
@@ -239,7 +273,7 @@ class ShippingDetails extends StatelessWidget {
               ),
               TableRow(
                 children: [
-                  KeyText(msg: "Adresa i kućni broj",),
+                  KeyText(msg: "Adresa",),
                   Text(model.flatNumber),
                 ],
               ),

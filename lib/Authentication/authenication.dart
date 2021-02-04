@@ -26,7 +26,7 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
           title: Text("Grocery App",
           style: TextStyle(
             color: Colors.white,
-            fontFamily: "Signatra",
+            fontFamily: "Vidaloka-Regular",
             fontSize: 35.0,
           ),
           ),

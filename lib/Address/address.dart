@@ -168,7 +168,7 @@ class _AddressCardState extends State<AddressCard> {
                           ),
                           TableRow(
                             children: [
-                              KeyText(msg: "Adresa i kućni broj",),
+                              KeyText(msg: "Adresa",),
                               Text(widget.model.flatNumber),
                             ],
                           ),

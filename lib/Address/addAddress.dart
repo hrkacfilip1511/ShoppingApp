@@ -11,7 +11,7 @@ class AddAddress extends StatelessWidget {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final cName = TextEditingController();
   final cPhoneNumber = TextEditingController();
-  final cHomeNumber = TextEditingController();
+  final cAddress = TextEditingController();
   final cCity = TextEditingController();
   //final cState = TextEditingController();
   //final cPinCode = TextEditingController();
@@ -31,7 +31,7 @@ class AddAddress extends StatelessWidget {
               //  state: cState.text.trim(),
                 //pincode: cPinCode.text,
                 phoneNumber: cPhoneNumber.text,
-                flatNumber: cHomeNumber.text,
+                flatNumber: cAddress.text,
                 city: cCity.text.trim(),
               ).toJson();
               EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
@@ -84,8 +84,8 @@ class AddAddress extends StatelessWidget {
                       controller: cState,
                     ),*/
                     MyTextField(
-                      hint: "Adresa i kućni broj",
-                      controller: cHomeNumber,
+                      hint: "Adresa",
+                      controller: cAddress,
                     ),
                     MyTextField(
                       hint: "Broj mobitela",

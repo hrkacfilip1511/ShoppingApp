@@ -37,7 +37,7 @@ class _StoreHomeState extends State<StoreHome> {
           title: Text("Grocery App",
             style: TextStyle(
               color: Colors.white,
-              fontFamily: "Signatra",
+              fontFamily: "Vidaloka-Regular",
               fontSize: 35.0,
             ),
           ),
@@ -142,8 +142,9 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                       children: [
                         Expanded(
                           child: Text(model.title, style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 17.0,
+                            color: Colors.black54,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
                           ),),
                         ),
                       ],
@@ -156,8 +157,9 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                       children: [
                         Expanded(
                           child: Text(model.shortInfo, style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 17.0,
+                            color: Colors.black,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
                           ),),
                         ),
                       ],
@@ -166,34 +168,6 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                   SizedBox(height: 20.0,),
                   Row(
                     children: [
-                      /*Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: Colors.red,
-                        ),
-                        alignment: Alignment.topLeft,
-                        width: 40.0,
-                        height: 43.0,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("50%",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0
-                              ),
-                              ),
-                              Text("OFF",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12.0
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),*/
                       SizedBox(width: 10.0,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,32 +194,6 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                               ],
                             ),
                           ),
-
-                         /* Padding(
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Row(
-                              children: [
-                                Text(r"New Price: ",
-                                  style: TextStyle(
-                                    fontSize: 14.0,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                Text(
-                                  "€",
-                                  style: TextStyle(
-                                    color: Colors.red, fontSize: 16.0
-                                  ),
-                                ),
-                                Text((model).toString(),
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),*/
                         ],
                       ),
                     ],
@@ -267,8 +215,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                         onPressed: () {
 
                           removeCartFunction();
-                          /*Route route = MaterialPageRoute(builder: (c) => StoreHome());
-                          Navigator.pushReplacement(context, route);*/
+
                         },
                       )
 

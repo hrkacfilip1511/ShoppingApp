@@ -135,7 +135,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                 height: 5.0,
                 color: Colors.brown,
               ),
-              //to implement the cart item remove feature
+
             ],
           ),
         ),

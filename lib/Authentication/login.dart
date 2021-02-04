@@ -103,7 +103,7 @@ class _LoginState extends State<Login>
                 Icons.nature_people,
                 color: Colors.white,
               ),
-              label: Text("Ja sam admin",
+              label: Text("Idi na admina",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

@@ -28,7 +28,7 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget
       title: Text("Grocery App",
         style: TextStyle(
           color: Colors.white,
-          fontFamily: "Signatra",
+          fontFamily: "Vidaloka-Regular",
           fontSize: 35.0,
         ),
       ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/adminShiftOrders.dart';
+import 'package:e_shop/Authentication/authenication.dart';
+import 'package:e_shop/Authentication/login.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/main.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -40,18 +41,17 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
                 colors: [Colors.red, Colors.orange]),
           ),
         ),
+        title: Text("Grocery App",
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: "Vidaloka-Regular",
+            fontSize: 35.0,
+          ),
+        ),
+        centerTitle: true,
         leading: Icon(
           Icons.nature_people,
-        ),/* IconButton(
-          icon: Icon(
-            Icons.border_color,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
-            Navigator.pushReplacement(context, route);
-          },
-        ),*/
+        ),
         actions: [
           FlatButton(
             child: Text("Odjava",
@@ -62,7 +62,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
             ),
             ),
             onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+              Route route = MaterialPageRoute(builder: (c) => AuthenticScreen());
               Navigator.pushReplacement(context, route);
             },
           ),
@@ -82,7 +82,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.library_add, color: Colors.white, size: 120.0),
+            Icon(Icons.note_add, color: Colors.white, size: 120.0),
             Padding(padding: EdgeInsets.only(top: 20.0),
             child: RaisedButton(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
@@ -213,14 +213,14 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
 
           ),
           ListTile(
-            leading: Icon(Icons.title, color: Colors.green,),
+            leading: Icon(Icons.mode_edit, color: Colors.green,),
             title: Container(
               width: 250.0,
               child: TextField(
                 style: TextStyle(color: Colors.deepOrangeAccent),
                 controller: _titleTextEditingController,
                 decoration: InputDecoration(
-                  hintText: "Naziv artikla",
+                  hintText: "Količina",
                   hintStyle: TextStyle(color: Colors.pink),
                   border: InputBorder.none,
                 ),
@@ -229,14 +229,14 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
           ),
           Divider(color: Colors.black,),
           ListTile(
-            leading: Icon(Icons.perm_device_information, color: Colors.green,),
+            leading: Icon(Icons.title, color: Colors.green,),
             title: Container(
               width: 250.0,
               child: TextField(
                 style: TextStyle(color: Colors.deepOrangeAccent),
                 controller: _shortTextEditingController,
                 decoration: InputDecoration(
-                  hintText: "Kolicina",
+                  hintText: "Naziv artikla",
                   hintStyle: TextStyle(color: Colors.pink),
                   border: InputBorder.none,
                 ),
