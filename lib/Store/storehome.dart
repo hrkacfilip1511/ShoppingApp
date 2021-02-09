@@ -125,7 +125,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
     child: Padding(
       padding: EdgeInsets.all(6.0),
       child: Container(
-        height: 190.0,
+        height: 155.0,
         width: width,
         child: Row(
           children: [
@@ -174,7 +174,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(top: 0.0),
-                            child: Row(
+                           /* child: Row(
                               children: [
                                 Text("Cijena: " + (model.price).toString() ,
                                   style: TextStyle(
@@ -192,7 +192,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                                 ),
 
                               ],
-                            ),
+                            ),*/
                           ),
                         ],
                       ),
@@ -265,7 +265,7 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
 
 void checkItemInCart(String shortInfoAsID, BuildContext context)
 {
-  EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).contains(shortInfoAsID) //provjerava sadrzi li artikl vec u kosarici
+  EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).contains(shortInfoAsID)
       ? Fluttertoast.showToast(msg: "Artikl je već u košarici.")
       : addItemtoCart(shortInfoAsID, context);
 }

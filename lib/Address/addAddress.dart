@@ -39,7 +39,7 @@ class AddAddress extends StatelessWidget {
                   .collection(EcommerceApp.subCollectionAddress).document(DateTime.now().millisecondsSinceEpoch.toString())
                   .setData(model)
                   .then((value) {
-                    final snack = SnackBar(content: Text("Uspješno ste dodali adresu."));
+                    final snack = SnackBar(content: Text("Adresa je uspješno dodana."));
                     FocusScope.of(context).requestFocus(FocusNode());
                     formKey.currentState.reset();
               });

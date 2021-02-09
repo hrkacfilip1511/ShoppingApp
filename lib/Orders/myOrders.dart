@@ -29,7 +29,7 @@ class _MyOrdersState extends State<MyOrders> {
         ),
           centerTitle: true,
 
-          title: Text("Moje narudžbe", style: TextStyle(color: Colors.white),),
+          title: Text("Moje liste", style: TextStyle(color: Colors.white),),
           actions: [
            /* IconButton(
               icon: Icon(Icons.arrow_drop_down, color: Colors.white,),

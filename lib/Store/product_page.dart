@@ -68,13 +68,6 @@ class _ProductPageState extends State<ProductPage> {
                           SizedBox(
                             height: 10.0,
                           ),
-                          Text(
-                           "KM " + widget.itemModel.price.toString(),
-                            style: boldTextStyle,
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
                         ],
                       ),
                     ),

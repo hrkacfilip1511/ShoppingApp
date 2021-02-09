@@ -42,25 +42,7 @@ OrderDetails({Key key, this.orderID}) : super(key: key);
                     SizedBox(height: 10.0,),
                     Padding(
                       padding: EdgeInsets.all(4.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Center(
-                          child: Text(
-                            "Cijena: " + dataMap[EcommerceApp.totalAmount].toString() + " KM",
-                            style: TextStyle(
-                              fontSize: 19.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Divider(
-                      height: 2.0,
-                      color: Colors.black,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Text("ID narudžbe: " + getOrderId,
+                      child: Text("ID liste: " + getOrderId,
                       style: TextStyle(
                         color: Colors.black,
                       ),
@@ -74,7 +56,7 @@ OrderDetails({Key key, this.orderID}) : super(key: key);
                     Padding(
                       padding: EdgeInsets.all(4.0),
                       child: Text(
-                        "Naručeno: " + DateFormat("dd MMMM, yyyy - hh:mm aa")
+                        "Spremljeno: " + DateFormat("dd MMMM, yyyy - hh:mm aa")
                             .format(DateTime.fromMillisecondsSinceEpoch(int.parse(dataMap["orderTime"]))),
                         style: TextStyle(
                           color: Colors.black,
@@ -105,8 +87,6 @@ OrderDetails({Key key, this.orderID}) : super(key: key);
                       future: EcommerceApp.firestore
                         .collection(EcommerceApp.collectionUser)
                         .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-                        .collection(EcommerceApp.subCollectionAddress)
-                        .document(dataMap[EcommerceApp.addressID])
                         .get(),
                       builder: (c, snap){
                         return snap.hasData
@@ -163,7 +143,7 @@ class StatusBanner extends StatelessWidget {
             ),
           ),*/
           SizedBox(width: 20.0,),
-          Text("Narudžba izvršena " + msg,
+          Text("Lista spremljena " + msg,
           style: TextStyle(
             color: Colors.white
           ),
@@ -191,13 +171,6 @@ class StatusBanner extends StatelessWidget {
 
 
 
-class PaymentDetailsCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-    );
-  }
-}
 
 
 
@@ -245,7 +218,7 @@ class ShippingDetails extends StatelessWidget {
           }
         ),
         SizedBox(height: 20.0,),
-        Padding(
+        /*Padding(
           padding: EdgeInsets.symmetric(horizontal: 90.0, vertical: 5.0),
           child: Text(
               "Detalji kupovine",
@@ -253,8 +226,8 @@ class ShippingDetails extends StatelessWidget {
               color: Colors.black,
             ),
           ),
-        ),
-        Container(
+        ),*/
+   /*     Container(
           padding: EdgeInsets.symmetric(horizontal: 90.0, vertical: 5.0),
           width: screenWidth,
           child: Table(
@@ -285,7 +258,7 @@ class ShippingDetails extends StatelessWidget {
               ),
             ],
           ),
-        ),
+        ),*/
         Padding(
           padding: EdgeInsets.all(10.0),
           child: Center(
@@ -303,7 +276,7 @@ class ShippingDetails extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 40.0,
                 height: 50.0,
                 child: Center(
-                  child: Text("Potvrđeno",
+                  child: Text("Potvrdite uspješnu kupovinu",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 13.0,
@@ -326,7 +299,7 @@ class ShippingDetails extends StatelessWidget {
 
     Route route = MaterialPageRoute(builder: (c) => StoreHome());
     Navigator.pushReplacement(context, route);
-    Fluttertoast.showToast(msg: "Narudžba je primljena.");
+    Fluttertoast.showToast(msg: "Kupovina uspješno odrađena.");
   }
 }
 

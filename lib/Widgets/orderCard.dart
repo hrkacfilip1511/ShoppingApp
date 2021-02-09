@@ -27,13 +27,11 @@ class OrderCard extends StatelessWidget {
       },
       child: Container(
         decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-              colors: [Colors.red, Colors.orange]
-          ),
+          color: Colors.orange,
         ),
-        padding: EdgeInsets.all(10.0),
-        margin: EdgeInsets.all(10.0),
-        height: itemCount * 190.0,
+        padding: EdgeInsets.all(3.0),
+        margin: EdgeInsets.all(3.0),
+        height: itemCount * 140.0,
         child: ListView.builder(
           itemCount: itemCount,
           physics: NeverScrollableScrollPhysics(),
@@ -56,7 +54,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
 
   return  Container(
     color: Colors.white,
-    height: 190.0,
+    height: 140.0,
     width: width,
     child: Row(
       children: [
@@ -101,7 +99,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
+                     /* Padding(
                         padding: EdgeInsets.only(top: 0.0),
                         child: Row(
                           children: [
@@ -122,7 +120,7 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
 
                           ],
                         ),
-                      ),
+                      ),*/
 
                     ],
                   ),

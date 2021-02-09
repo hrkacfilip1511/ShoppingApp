@@ -103,7 +103,7 @@ class _LoginState extends State<Login>
                 Icons.nature_people,
                 color: Colors.white,
               ),
-              label: Text("Idi na admina",
+              label: Text("Prijavi se kao admin",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _LoginState extends State<Login>
     showDialog(
         context: context,
         builder: (c) {
-          return LoadingAlertDialog(message: "Prijavljujem se...",);
+          return LoadingAlertDialog(message: "Prijava u tijeku...",);
         }
     );
     FirebaseUser firebaseUser;

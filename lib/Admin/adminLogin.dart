@@ -109,7 +109,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                     : showDialog(
                     context: context,
                     builder: (c) {
-                      return ErrorAlertDialog(message: "Molimo, unesite email i lozinku",);
+                      return ErrorAlertDialog(message: "Molimo, unesite ID i lozinku",);
                     }
                 );
               },
@@ -135,7 +135,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
                 Icons.error,
                 color: Colors.white,
               ),
-              label: Text("Idi na korisnika",
+              label: Text("Prijavi se kao korisnik",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -154,13 +154,13 @@ class _AdminSignInScreenState extends State<AdminSignInScreen>
     Firestore.instance.collection("admins").getDocuments().then((snapshot){
       snapshot.documents.forEach((result) {
         if (result.data["id"] != _adminIDTextEditingController.text.trim()) {
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your ID is not correct."),));
+          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Netočan ID"),));
         }
         if (result.data["password"] != _passwordTextEditingController.text.trim()) {
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Your password is not correct."),));
+          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Netočna lozinka"),));
         }
         else{
-          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Welcome  Dear Admin, " + result.data["name"]),));
+          Scaffold.of(context).showSnackBar(SnackBar(content: Text("Dobrodošli, " + result.data["name"]),));
 
           setState(() {
             _adminIDTextEditingController.text = "";

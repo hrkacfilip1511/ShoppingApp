@@ -75,7 +75,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 onPressed: () {
                   addOrderDetails();
                 },
-                child: Text("Završite narudžbu", style: TextStyle(color: Colors.white, fontSize: 15.0),),
+                child: Text("Spremi", style: TextStyle(color: Colors.white, fontSize: 15.0),),
               ),
             ],
           ),
@@ -115,7 +115,7 @@ class _PaymentPageState extends State<PaymentPage> {
       EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, tempList),
       Provider.of<CartItemCounter>(context, listen: false).displayResult(),
     });
-    Fluttertoast.showToast(msg: "Uspješno ste naručili");
+    Fluttertoast.showToast(msg: "Spremljeno");
     Route route = MaterialPageRoute(builder: (c) =>StoreHome());
     Navigator.pushReplacement(context, route);
   }

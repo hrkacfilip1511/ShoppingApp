@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Address/address.dart';
+import 'package:e_shop/Orders/placeOrderPayment.dart';
 import 'package:e_shop/Widgets/customAppBar.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/Models/item.dart';
@@ -16,6 +17,11 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 
 class CartPage extends StatefulWidget {
+  final String addressId;
+  final double totalAmount;
+
+  CartPage({Key key, this.addressId, this.totalAmount}) : super(key: key);
+
   @override
   _CartPageState createState() => _CartPageState();
 }
@@ -40,7 +46,7 @@ class _CartPageState extends State<CartPage> {
             Fluttertoast.showToast(msg: "Košarica je prazna");
           }
           else{
-            Route route = MaterialPageRoute(builder: (c) => Address(totalAmount: totalAmount));
+            Route route = MaterialPageRoute(builder: (c) => PaymentPage());
             Navigator.pushReplacement(context, route);
           }
         },
@@ -66,21 +72,21 @@ class _CartPageState extends State<CartPage> {
                 child: Center(
                   child: cartProvider.count == 0
                       ? Container(
-                    child: Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
+                    /*child: Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    ),*/
                   )
-                      : Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
+                      : Container(), /* Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
-                  ),
+                  ),*/
                 ),
               );
             },),
@@ -157,4 +163,52 @@ class _CartPageState extends State<CartPage> {
       totalAmount = 0;
     });
   }
+  addOrderDetails() {
+    writeOrderDetailsForUser({
+      EcommerceApp.addressID: widget.addressId,
+      EcommerceApp.totalAmount: widget.totalAmount,
+      "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
+      EcommerceApp.paymentDetails: "Gotovinsko plaćanje",
+      EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
+      EcommerceApp.isSuccess: true,
+    });
+    writeOrderDetailsForAdmin({
+      EcommerceApp.addressID: widget.addressId,
+      EcommerceApp.totalAmount: widget.totalAmount,
+      "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
+      EcommerceApp.paymentDetails: "Gotovinsko plaćanje",
+      EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
+      EcommerceApp.isSuccess: true,
+    }).whenComplete(() => {
+      emptyCartNow(),
+    });
+  }
+  emptyCartNow() {
+    EcommerceApp.sharedPreferences.setStringList("userCart", ["garbageValue"]);
+    List tempList = EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+    Firestore.instance.collection("users").document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)).updateData({
+      EcommerceApp.userCartList: tempList,
+    }).then((value) => {
+      EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, tempList),
+      Provider.of<CartItemCounter>(context, listen: false).displayResult(),
+    });
+    Fluttertoast.showToast(msg: "Uspješno ste naručili");
+    Route route = MaterialPageRoute(builder: (c) =>StoreHome());
+    Navigator.pushReplacement(context, route);
+  }
+
+  Future writeOrderDetailsForUser(Map<String, dynamic> data) async {
+    await EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
+        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+        .collection(EcommerceApp.collectionOrders)
+        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) + data['orderTime']).setData(data);
+  }
+  Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
+    await EcommerceApp.firestore
+        .collection(EcommerceApp.collectionOrders)
+        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) + data['orderTime']).setData(data);
+  }
+
 }

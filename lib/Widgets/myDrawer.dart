@@ -16,7 +16,7 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 25.0, bottom: 10.0),
+            padding: EdgeInsets.only(top: 25.0, bottom: 120.0),
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
                   colors: [Colors.red, Colors.orange]
@@ -64,7 +64,7 @@ class MyDrawer extends StatelessWidget {
                       Divider(height: 10.0, color: Colors.white,thickness: 1.0),
                       ListTile(
                         leading: Icon(Icons.assignment_turned_in, color: Colors.white),
-                        title: Text("Moje narudžbe", style: TextStyle(color: Colors.white)),
+                        title: Text("Moje liste", style: TextStyle(color: Colors.white)),
                         onTap: () {
                           Route route = MaterialPageRoute(builder: (c) => MyOrders());
                           Navigator.pushReplacement(context, route);
@@ -88,7 +88,7 @@ class MyDrawer extends StatelessWidget {
                           Navigator.pushReplacement(context, route);
                         },
                       ),
-                      Divider(height: 10.0, color: Colors.white,thickness: 1.0),
+                      /*  Divider(height: 10.0, color: Colors.white,thickness: 1.0),
                       ListTile(
                         leading: Icon(Icons.add_location, color: Colors.white),
                         title: Text("Dodaj novu adresu", style: TextStyle(color: Colors.white)),
@@ -96,7 +96,7 @@ class MyDrawer extends StatelessWidget {
                           Route route = MaterialPageRoute(builder: (c) => AddAddress());
                           Navigator.pushReplacement(context, route);
                         },
-                      ),
+                      ),*/
                       Divider(height: 10.0, color: Colors.white,thickness: 1.0),
                       ListTile(
                         leading: Icon(Icons.exit_to_app, color: Colors.white),
@@ -108,6 +108,7 @@ class MyDrawer extends StatelessWidget {
                           });
                         },
                       ),
+                      Divider(height: 10.0, color: Colors.white,thickness: 1.0),
                     ],
                   ),
                 ),

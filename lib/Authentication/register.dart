@@ -145,7 +145,7 @@ class _RegisterState extends State<Register>
     showDialog(
         context: context,
         builder: (c) {
-          return LoadingAlertDialog(message: "Registriram se...");
+          return LoadingAlertDialog(message: "Registracija u tijeku...");
         }
     );
 
