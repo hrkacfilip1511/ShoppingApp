@@ -53,8 +53,9 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
           ),
         ),
         centerTitle: true,
-        leading: Icon(
-          Icons.nature_people,
+        leading: IconButton(
+         icon: Icon( Icons.note_add),
+          onPressed: () => takeImage(context),
         ),
         actions: [
           FlatButton(
@@ -72,7 +73,27 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
           ),
         ],
       ),
-      body: getAdminHomeScreenBody(),
+     // body: getAdminHomeScreenBody(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
+          StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance.collection("items").limit(15).orderBy("publishedDate", descending: true).snapshots(),
+            builder: (context, dataSnapshot){
+              return !dataSnapshot.hasData ? SliverToBoxAdapter(child: Center(child: circularProgress(),),) :
+              SliverStaggeredGrid.countBuilder(
+                crossAxisCount: 1,
+                staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                itemBuilder: (context, index){
+                  ItemModel model = ItemModel.fromJson(dataSnapshot.data.documents[index].data);
+                  return sourceInfo(model, context);
+                },
+                itemCount: dataSnapshot.data.documents.length,
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -86,20 +107,7 @@ class _UploadPageState extends State<UploadPage> with AutomaticKeepAliveClientMi
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.note_add, color: Colors.white, size: 120.0),
-            Padding(padding: EdgeInsets.only(top: 20.0),
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
-              child: Text("Dodaj artikle",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15.0,
-              ),
-              ),
-              color: Colors.green,
-              onPressed: () => takeImage(context),
-            ),
-            ),
+
           ],
         )
       ),
