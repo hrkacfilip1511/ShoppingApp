@@ -174,25 +174,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                         children: [
                           Padding(
                             padding: EdgeInsets.only(top: 0.0),
-                           /* child: Row(
-                              children: [
-                                Text("Cijena: " + (model.price).toString() ,
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.red,
-                                    //decoration: TextDecoration.lineThrough,
-                                  ),
-                                ),
-                                Text(" KM ",
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.red,
-                                 // decoration: TextDecoration.lineThrough,
-                                ),
-                                ),
 
-                              ],
-                            ),*/
                           ),
                         ],
                       ),
@@ -224,7 +206,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                     height: 5.0,
                     color: Colors.brown,
                   ),
-                  //to implement the cart item remove feature
+
                 ],
               ),
             ),

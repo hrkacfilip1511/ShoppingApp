@@ -1,5 +1,3 @@
-//import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Address/address.dart';
@@ -34,7 +32,6 @@ class _CartPageState extends State<CartPage> {
     super.initState();
     totalAmount = 0;
     Provider.of<TotalAmount>(context, listen: false).display(0);
-
   }
 
   @override
@@ -42,18 +39,21 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          if(EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).length == 1){
+          if (EcommerceApp.sharedPreferences
+                  .getStringList(EcommerceApp.userCartList)
+                  .length ==
+              1) {
             Fluttertoast.showToast(msg: "Košarica je prazna");
-          }
-          else{
+          } else {
             Route route = MaterialPageRoute(builder: (c) => PaymentPage());
             Navigator.pushReplacement(context, route);
           }
         },
-        label: Text("Spremi",
-        style: TextStyle(
-          //color: Colors.orangeAccent,
-        ),
+        label: Text(
+          "Spremi",
+          style: TextStyle(
+              //color: Colors.orangeAccent,
+              ),
         ),
         backgroundColor: Colors.blueGrey,
         icon: Icon(
@@ -66,67 +66,84 @@ class _CartPageState extends State<CartPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Consumer2<TotalAmount, CartItemCounter>(builder: (context, amountProvider, cartProvider, c){
-              return Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(
-                  child: cartProvider.count == 0
-                      ? Container(
-                    /*child: Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
+            child: Consumer2<TotalAmount, CartItemCounter>(
+              builder: (context, amountProvider, cartProvider, c) {
+                return Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Center(
+                    child: cartProvider.count == 0
+                        ? Container(
+                            /*child: Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),*/
-                  )
-                      : Container(), /* Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
+                            )
+                        : Container(), /* Text("Ukupna cijena: KM ${amountProvider.totalAmount.toString()} ",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                         ),
                   ),*/
-                ),
-              );
-            },),
+                  ),
+                );
+              },
+            ),
           ),
           StreamBuilder<QuerySnapshot>(
-            stream: EcommerceApp.firestore.collection("items")
-              .where("shortInfo", whereIn: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList)).snapshots(),
-            builder: (context, snapshot){
+            stream: EcommerceApp.firestore
+                .collection("items")
+                .where("shortInfo",
+                    whereIn: EcommerceApp.sharedPreferences
+                        .getStringList(EcommerceApp.userCartList))
+                .snapshots(),
+            builder: (context, snapshot) {
               return !snapshot.hasData
-                  ? SliverToBoxAdapter(child: Center(child: circularProgress(),),)
-                  : snapshot.data.documents.length == 0
-                  ? beginbuildingCart()
-                  : SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (context,index)
-                              {
-                                ItemModel model = ItemModel.fromJson(snapshot.data.documents[index].data);
-                                if(index == 0){
-                                  totalAmount = 0;
-                                  totalAmount = model.price + totalAmount;
-                                }
-                                else{
-                                  totalAmount = model.price + totalAmount;
-                                }
-                                if (snapshot.data.documents.length - 1 == index){
-                                  WidgetsBinding.instance.addPostFrameCallback((t){
-                                    Provider.of<TotalAmount>(context, listen: false).display(totalAmount);
-                                  });
-                                }
-                                return sourceInfo(model, context, removeCartFunction: () => removeItemFromCart(model.shortInfo));
-                              },
-                              childCount: snapshot.hasData ? snapshot.data.documents.length : 0,
+                  ? SliverToBoxAdapter(
+                      child: Center(
+                        child: circularProgress(),
                       ),
-              );
+                    )
+                  : snapshot.data.documents.length == 0
+                      ? beginbuildingCart()
+                      : SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              ItemModel model = ItemModel.fromJson(
+                                  snapshot.data.documents[index].data);
+                              if (index == 0) {
+                                totalAmount = 0;
+                                totalAmount = model.price + totalAmount;
+                              } else {
+                                totalAmount = model.price + totalAmount;
+                              }
+                              if (snapshot.data.documents.length - 1 == index) {
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((t) {
+                                  Provider.of<TotalAmount>(context,
+                                          listen: false)
+                                      .display(totalAmount);
+                                });
+                              }
+                              return sourceInfo(model, context,
+                                  removeCartFunction: () =>
+                                      removeItemFromCart(model.shortInfo));
+                            },
+                            childCount: snapshot.hasData
+                                ? snapshot.data.documents.length
+                                : 0,
+                          ),
+                        );
             },
           ),
         ],
       ),
     );
   }
+
   beginbuildingCart() {
     return SliverToBoxAdapter(
       child: Card(
@@ -137,7 +154,9 @@ class _CartPageState extends State<CartPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.sentiment_dissatisfied),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               Text("Košarica je prazna"),
             ],
           ),
@@ -147,28 +166,34 @@ class _CartPageState extends State<CartPage> {
   }
 
   removeItemFromCart(String shortInfoAsId) {
-    List tempCartList = EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+    List tempCartList =
+        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
     tempCartList.remove(shortInfoAsId);
 
-    EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
-        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+    EcommerceApp.firestore
+        .collection(EcommerceApp.collectionUser)
+        .document(
+            EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .updateData({
       EcommerceApp.userCartList: tempCartList,
-    }).then((v){
+    }).then((v) {
       Fluttertoast.showToast(msg: "Artikl uspješno izbrisan");
-      EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, tempCartList);
+      EcommerceApp.sharedPreferences
+          .setStringList(EcommerceApp.userCartList, tempCartList);
 
       Provider.of<CartItemCounter>(context, listen: false).displayResult();
 
       totalAmount = 0;
     });
   }
+
   addOrderDetails() {
     writeOrderDetailsForUser({
       EcommerceApp.addressID: widget.addressId,
       EcommerceApp.totalAmount: widget.totalAmount,
       "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences
+          .getStringList(EcommerceApp.userCartList),
       EcommerceApp.paymentDetails: "Gotovinsko plaćanje",
       EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
       EcommerceApp.isSuccess: true,
@@ -177,38 +202,55 @@ class _CartPageState extends State<CartPage> {
       EcommerceApp.addressID: widget.addressId,
       EcommerceApp.totalAmount: widget.totalAmount,
       "orderBy": EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID),
-      EcommerceApp.productID: EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList),
+      EcommerceApp.productID: EcommerceApp.sharedPreferences
+          .getStringList(EcommerceApp.userCartList),
       EcommerceApp.paymentDetails: "Gotovinsko plaćanje",
       EcommerceApp.orderTime: DateTime.now().millisecondsSinceEpoch.toString(),
       EcommerceApp.isSuccess: true,
     }).whenComplete(() => {
-      emptyCartNow(),
-    });
+          emptyCartNow(),
+        });
   }
+
   emptyCartNow() {
     EcommerceApp.sharedPreferences.setStringList("userCart", ["garbageValue"]);
-    List tempList = EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
-    Firestore.instance.collection("users").document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID)).updateData({
+    List tempList =
+        EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+    Firestore.instance
+        .collection("users")
+        .document(
+            EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+        .updateData({
       EcommerceApp.userCartList: tempList,
     }).then((value) => {
-      EcommerceApp.sharedPreferences.setStringList(EcommerceApp.userCartList, tempList),
-      Provider.of<CartItemCounter>(context, listen: false).displayResult(),
-    });
+              EcommerceApp.sharedPreferences
+                  .setStringList(EcommerceApp.userCartList, tempList),
+              Provider.of<CartItemCounter>(context, listen: false)
+                  .displayResult(),
+            });
     Fluttertoast.showToast(msg: "Uspješno ste naručili");
-    Route route = MaterialPageRoute(builder: (c) =>StoreHome());
+    Route route = MaterialPageRoute(builder: (c) => StoreHome());
     Navigator.pushReplacement(context, route);
   }
 
   Future writeOrderDetailsForUser(Map<String, dynamic> data) async {
-    await EcommerceApp.firestore.collection(EcommerceApp.collectionUser)
-        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+    await EcommerceApp.firestore
+        .collection(EcommerceApp.collectionUser)
+        .document(
+            EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .collection(EcommerceApp.collectionOrders)
-        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) + data['orderTime']).setData(data);
+        .document(
+            EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
+                data['orderTime'])
+        .setData(data);
   }
+
   Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
     await EcommerceApp.firestore
         .collection(EcommerceApp.collectionOrders)
-        .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) + data['orderTime']).setData(data);
+        .document(
+            EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
+                data['orderTime'])
+        .setData(data);
   }
-
 }
