@@ -8,8 +8,10 @@ import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Counters/cartitemcounter.dart';
 import 'package:e_shop/Models/item.dart';
 import 'package:e_shop/Store/storehome.dart';
+import 'package:e_shop/Widgets/AdminInfo.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/Widgets/searchBox.dart';
+import 'package:e_shop/Widgets/searchBoxAdmin.dart';
 import 'package:e_shop/main.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,7 +89,7 @@ class _UploadPageState extends State<UploadPage>
         slivers: [
           SliverPersistentHeader(
             pinned: true,
-            delegate: SearchBoxDelegate(),
+            delegate: SearchBoxAdminDelegate(),
           ),
           StreamBuilder<QuerySnapshot>(
             stream: Firestore.instance
@@ -119,128 +121,9 @@ class _UploadPageState extends State<UploadPage>
     );
   }
 
-  Widget adminInfo(ItemModel model, BuildContext context, {Color background}) {
-    return InkWell(
-      onTap: () {},
-      splashColor: Colors.brown,
-      child: Padding(
-        padding: EdgeInsets.all(6.0),
-        child: Container(
-          height: 155.0,
-          width: width,
-          child: Row(
-            children: [
-              Image.network(
-                model.thumbnailUrl,
-                width: 140.0,
-                height: 140.0,
-              ),
-              SizedBox(
-                width: 4.0,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 15.0),
-                    Container(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              model.title,
-                              style: TextStyle(
-                                color: Colors.black54,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              model.shortInfo,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 0.0),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Flexible(
-                      child: Container(),
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.orangeAccent,
-                        ),
-                        onPressed: () {
-                          //var logger = Logger();
-
-                          //logger.d("Logger is working! ");
-                          removeItemFunction(model.idProduct);
-                        },
-                      ),
-                    ),
-                    Divider(
-                      height: 5.0,
-                      color: Colors.brown,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   /*Future<void> deleteItem(String productID){
     return Firebase.instance.collection('items').document(EcommerceApp.productID).delete();
   }*/
-  removeItemFunction(String productId) async {
-    await Firestore.instance
-        .collection('items')
-        .document(productId)
-        .delete()
-        .then(
-            (value) => Fluttertoast.showToast(msg: "Artikl uspješno izbrisan"));
-  }
 
   getAdminHomeScreenBody() {
     return Container(
