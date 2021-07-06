@@ -10,27 +10,27 @@ import '../Store/storehome.dart';
 import 'package:e_shop/Config/config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
 }
 
-
-
-class _RegisterState extends State<Register>
-{
-  final TextEditingController _nameTextEditingController = TextEditingController();
-  final TextEditingController _emailTextEditingController = TextEditingController();
-  final TextEditingController _passwordTextEditingController = TextEditingController();
-  final TextEditingController _cPasswordTextEditingController = TextEditingController();
+class _RegisterState extends State<Register> {
+  final TextEditingController _nameTextEditingController =
+      TextEditingController();
+  final TextEditingController _emailTextEditingController =
+      TextEditingController();
+  final TextEditingController _passwordTextEditingController =
+      TextEditingController();
+  final TextEditingController _cPasswordTextEditingController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String userImageUrl = "";
   File _imageFile;
   @override
   Widget build(BuildContext context) {
-    double _screenWidth = MediaQuery.of(context).size.width, _screenHeight = MediaQuery.of(context).size.width;
+    double _screenWidth = MediaQuery.of(context).size.width,
+        _screenHeight = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       child: Container(
         child: Column(
@@ -38,13 +38,16 @@ class _RegisterState extends State<Register>
           children: [
             SizedBox(height: 8.0),
             InkWell(
-              onTap: ()=>_selectAndPickImage(),
+              onTap: () => _selectAndPickImage(),
               child: CircleAvatar(
                 radius: _screenWidth * 0.15,
                 backgroundColor: Colors.white,
-                backgroundImage: _imageFile==null ? null: FileImage(_imageFile),
+                backgroundImage:
+                    _imageFile == null ? null : FileImage(_imageFile),
                 child: _imageFile == null
-                  ? Icon(Icons.add_a_photo, size: _screenWidth * 0.15,color: Colors.grey) : null,
+                    ? Icon(Icons.add_a_photo,
+                        size: _screenWidth * 0.15, color: Colors.grey)
+                    : null,
               ),
             ),
             SizedBox(height: 8.0),
@@ -77,7 +80,6 @@ class _RegisterState extends State<Register>
                     isObsecure: true,
                   ),
                 ],
-
               ),
             ),
             RaisedButton(
@@ -85,14 +87,14 @@ class _RegisterState extends State<Register>
                 uploadAndSaveImage();
               },
               color: Colors.blue,
-              child: Text("Registriraj se",
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              child: Text(
+                "Registriraj se",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
             ),
             SizedBox(height: 30.0),
-
             SizedBox(
               height: 15.0,
             )
@@ -102,43 +104,38 @@ class _RegisterState extends State<Register>
     );
   }
 
-
-  Future<void>_selectAndPickImage() async{
-   _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future<void> _selectAndPickImage() async {
+    _imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
-  Future<void> uploadAndSaveImage() async{
-    if(_imageFile == null){ //ako nismo unijeli sliku
+
+  Future<void> uploadAndSaveImage() async {
+    if (_imageFile == null) {
+      //ako nismo unijeli sliku
       showDialog(
+          context: context,
+          builder: (c) {
+            return ErrorAlertDialog(message: "Molimo izaberite sliku profila");
+          });
+    } else {
+      _passwordTextEditingController.text ==
+              _cPasswordTextEditingController.text
+          ? _emailTextEditingController.text.isNotEmpty &&
+                  _passwordTextEditingController.text.isNotEmpty &&
+                  _cPasswordTextEditingController.text.isNotEmpty &&
+                  _nameTextEditingController.text.isNotEmpty
+              ? uploadToStorage()
+              : displayDialog(
+                  "Molimo unesite sve podatke potrebne za registraciju")
+          : displayDialog("Lozinka se ne podudara");
+    }
+  }
+
+  displayDialog(String msg) {
+    showDialog(
         context: context,
         builder: (c) {
-          return ErrorAlertDialog(message: "Molimo izaberite sliku profila");
-        }
-      );
-    }
-    else{
-      _passwordTextEditingController.text == _cPasswordTextEditingController.text
-          ? _emailTextEditingController.text.isNotEmpty &&
-          _passwordTextEditingController.text.isNotEmpty &&
-          _cPasswordTextEditingController.text.isNotEmpty &&
-          _nameTextEditingController.text.isNotEmpty
-
-          ? uploadToStorage()
-
-          : displayDialog("Molimo unesite sve podatke potrebne za registraciju")
-      
-          :displayDialog("Lozinka se ne podudara");
-    }
-  }
-
-
-  displayDialog(String msg){
-    showDialog(
-      context: context,
-      builder: (c)
-    {
-      return ErrorAlertDialog(message: msg);
-    }
-    );
+          return ErrorAlertDialog(message: msg);
+        });
   }
 
   uploadToStorage() async {
@@ -146,16 +143,12 @@ class _RegisterState extends State<Register>
         context: context,
         builder: (c) {
           return LoadingAlertDialog(message: "Registracija u tijeku...");
-        }
-    );
+        });
 
-    String imageFileName = DateTime
-        .now()
-        .millisecondsSinceEpoch
-        .toString();
+    String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-    StorageReference storageReference = FirebaseStorage.instance.ref().child(
-        imageFileName);
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child(imageFileName);
 
     StorageUploadTask storageUploadTask = storageReference.putFile(_imageFile);
 
@@ -166,50 +159,51 @@ class _RegisterState extends State<Register>
       _registerUser();
     });
   }
+
   FirebaseAuth _auth = FirebaseAuth.instance;
-   void _registerUser() async{
-      FirebaseUser firebaseUser;
+  void _registerUser() async {
+    FirebaseUser firebaseUser;
 
-      await _auth.createUserWithEmailAndPassword(
-        email: _emailTextEditingController.text.trim(),
-        password: _passwordTextEditingController.text.trim(),
-      ).then((auth){
-        firebaseUser = auth.user;
-      }).catchError((error){
-        Navigator.pop(context);
-        showDialog(
+    await _auth
+        .createUserWithEmailAndPassword(
+      email: _emailTextEditingController.text.trim(),
+      password: _passwordTextEditingController.text.trim(),
+    )
+        .then((auth) {
+      firebaseUser = auth.user;
+    }).catchError((error) {
+      Navigator.pop(context);
+      showDialog(
           context: context,
-          builder: (c){
+          builder: (c) {
             return ErrorAlertDialog(message: error.message.toString());
-          }
-        );
-      });
+          });
+    });
 
-      if(firebaseUser != null){
-        saveUserInfoToFireStore(firebaseUser).then((value){
-          Navigator.pop(context);
-          Route route = MaterialPageRoute(builder: (c) => StoreHome());
-          Navigator.pushReplacement(context, route);
-        });
-      }
-    }
-
-    Future saveUserInfoToFireStore(FirebaseUser fUser) async
-    {
-      Firestore.instance.collection("users").document(fUser.uid).setData({
-        "uid": fUser.uid,
-        "email": fUser.email,
-        "name": _nameTextEditingController.text.trim(),
-        "url": userImageUrl,
-        EcommerceApp.userCartList: ["garbageValue"]
+    if (firebaseUser != null) {
+      saveUserInfoToFireStore(firebaseUser).then((value) {
+        Navigator.pop(context);
+        Route route = MaterialPageRoute(builder: (c) => StoreHome());
+        Navigator.pushReplacement(context, route);
       });
-      
-      await EcommerceApp.sharedPreferences.setString("uid", fUser.uid);
-      await EcommerceApp.sharedPreferences.setString("email", fUser.email);
-      await EcommerceApp.sharedPreferences.setString("name", _nameTextEditingController.text.trim());
-      await EcommerceApp.sharedPreferences.setString("url", userImageUrl);
-      await EcommerceApp.sharedPreferences.setStringList("userCart", ["garbageValue"]);
     }
   }
 
+  Future saveUserInfoToFireStore(FirebaseUser fUser) async {
+    Firestore.instance.collection("users").document(fUser.uid).setData({
+      "uid": fUser.uid,
+      "email": fUser.email,
+      "name": _nameTextEditingController.text.trim(),
+      "url": userImageUrl,
+      EcommerceApp.userCartList: ["garbageValue"]
+    });
 
+    await EcommerceApp.sharedPreferences.setString("uid", fUser.uid);
+    await EcommerceApp.sharedPreferences.setString("email", fUser.email);
+    await EcommerceApp.sharedPreferences
+        .setString("name", _nameTextEditingController.text.trim());
+    await EcommerceApp.sharedPreferences.setString("url", userImageUrl);
+    await EcommerceApp.sharedPreferences
+        .setStringList("userCart", ["garbageValue"]);
+  }
+}

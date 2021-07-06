@@ -3,14 +3,12 @@ import 'login.dart';
 import 'register.dart';
 import 'package:e_shop/Config/config.dart';
 
-
 class AuthenticScreen extends StatefulWidget {
   @override
   _AuthenticScreenState createState() => _AuthenticScreenState();
 }
 
 class _AuthenticScreenState extends State<AuthenticScreen> {
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -19,16 +17,16 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
         appBar: AppBar(
           flexibleSpace: Container(
             decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                  colors: [Colors.red, Colors.orange]),
+              gradient: new LinearGradient(colors: [Colors.red, Colors.orange]),
             ),
           ),
-          title: Text("Grocery App",
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: "Vidaloka-Regular",
-            fontSize: 35.0,
-          ),
+          title: Text(
+            "Grocery App",
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Vidaloka-Regular",
+              fontSize: 35.0,
+            ),
           ),
           centerTitle: true,
           bottom: TabBar(
@@ -48,18 +46,18 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
         body: Container(
           decoration: BoxDecoration(
             gradient: new LinearGradient(
-                colors: [Colors.orange, Colors.red],
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                tileMode: TileMode.clamp,
+              colors: [Colors.orange, Colors.red],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              tileMode: TileMode.clamp,
             ),
           ),
           child: TabBarView(
             children: [
               Login(),
               Register(),
-          ],
-        ),
+            ],
+          ),
         ),
       ),
     );
